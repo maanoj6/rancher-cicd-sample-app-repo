@@ -1,13 +1,1 @@
-apiVersion: fleet.cattle.io/v1alpha1
-kind: GitRepo
-metadata:
-  name: testrepo
-  namespace: fleet-default
-spec:
-  repo: https://github.com/maanojo6/rancher-cicd-sample-app-repo
-  branch: main
-  targets:
-    - name: local-target
-      clusterSelector:
-        matchLabels:
-          name: local
+defaultNamespace: default
