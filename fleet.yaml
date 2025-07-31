@@ -1,4 +1,1 @@
 defaultNamespace: default
-targets:
-  - name: local-cluster
-    clusterName: local
