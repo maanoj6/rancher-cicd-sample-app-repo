@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: hello-world
+  namespace: default  # 👈 Add this line
   labels:
     app: hello-world
 spec:
@@ -15,7 +16,7 @@ spec:
         app: hello-world
     spec:
       containers:
-      - name: hello-world
-        image: nginx
-        ports:
-        - containerPort: 80
+        - name: hello-world
+          image: nginx
+          ports:
+            - containerPort: 80
