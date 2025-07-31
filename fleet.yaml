@@ -1,4 +1,7 @@
+
 defaultNamespace: default
 targets:
-  - name: local-cluster
-    clusterName: local
+  - name: local-target
+    clusterSelector:
+      matchLabels:
+        name: local
