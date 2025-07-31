@@ -1,28 +1,13 @@
-# fleet.yaml
-defaultNamespace: default
-
-# Define target clusters
-targets:
-- name: local
-  clusterSelector:
-    matchLabels:
-      management.cattle.io/cluster-display-name: local
-
-# Customization per target
-targetCustomizations:
-- name: local
-  helm:
-    values:
-      replicas: 2
-      image:
-        tag: "latest"
-
-# Diff configuration
-diff:
-  comparePatches:
-  - apiVersion: apps/v1
-    kind: Deployment
-    name: sample-app
-    namespace: default
-    operations:
-    - {"op": "remove", "path": "/spec/template/metadata/annotations"}
+apiVersion: fleet.cattle.io/v1alpha1
+kind: GitRepo
+metadata:
+  name: testrepo
+  namespace: fleet-default
+spec:
+  repo: https://github.com/maanojo6/rancher-cicd-sample-app-repo
+  branch: main
+  targets:
+    - name: local-target
+      clusterSelector:
+        matchLabels:
+          name: local
