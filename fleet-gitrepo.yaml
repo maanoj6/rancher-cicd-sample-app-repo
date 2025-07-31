@@ -1,7 +1,8 @@
+# fleet-gitrepo.yaml
 apiVersion: fleet.cattle.io/v1alpha1
 kind: GitRepo
 metadata:
-  name: sample-app
+  name: my-sample-app
   namespace: fleet-default
 spec:
   repo: https://github.com/maanoj6/rancher-cicd-sample-app-repo.git
@@ -9,7 +10,7 @@ spec:
   paths:
     - .
   targetCustomizations:
-    - name: local-cluster
+    - name: local-cluster-target
       clusterSelector:
         matchLabels:
           fleet.cattle.io/cluster-name: local
