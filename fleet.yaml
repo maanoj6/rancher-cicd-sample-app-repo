@@ -1,9 +1,3 @@
-
----
-
-## 📄 1. `fleet.yaml`
-
-```yaml
 defaultNamespace: default
 helm:
   releaseName: simple-fleet-app
