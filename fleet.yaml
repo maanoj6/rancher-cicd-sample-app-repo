@@ -1,7 +1,7 @@
-
+# .fleet/fleet.yaml
 defaultNamespace: default
 targets:
   - name: local-target
     clusterSelector:
       matchLabels:
-        name: local
+        provider.cattle.io: k3s
