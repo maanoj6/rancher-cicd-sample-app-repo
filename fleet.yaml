@@ -1,0 +1,11 @@
+
+---
+
+## 📄 1. `fleet.yaml`
+
+```yaml
+defaultNamespace: default
+helm:
+  releaseName: simple-fleet-app
+  valuesFiles:
+    - values.yaml
