@@ -1,0 +1,94 @@
+# Simple Rancher Fleet Deployment - Working Solution
+
+## Step 1: Delete Current GitRepo
+
+First, delete your current GitRepo in Rancher:
+1. Go to **Continuous Delivery** → **Git Repos**
+2. Find your `sample-app` and delete it
+3. Wait for it to be completely removed
+
+## Step 2: Create Single Combined File
+
+Put this single file in your repository root:
+
+### app.yaml
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sample-app
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sample-app
+  template:
+    metadata:
+      labels:
+        app: sample-app
+    spec:
+      containers:
+      - name: sample-app
+        image: nginx:alpine
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sample-app-service
+  namespace: default
+spec:
+  selector:
+    app: sample-app
+  ports:
+  - port: 80
+    targetPort: 80
+  type: ClusterIP
+```
+
+## Step 3: Create GitRepo via kubectl
+
+Instead of using the UI, use kubectl to create the GitRepo:
+
+```bash
+kubectl apply -f - <<EOF
+apiVersion: fleet.cattle.io/v1alpha1
+kind: GitRepo
+metadata:
+  name: sample-app
+  namespace: fleet-local
+spec:
+  repo: https://github.com/maanoj6/rancher-cicd-sample-app-repo.git
+  branch: main
+  targets:
+  - name: local
+    clusterSelector:
+      matchLabels:
+        name: local
+EOF
+```
+
+## Step 4: Verify
+
+Check the status:
+```bash
+kubectl get gitrepo -n fleet-local
+kubectl get bundles -n fleet-local
+kubectl get deployments
+```
+
+## If Still Getting Error
+
+Try this alternative single file approach:
+
+### kustomization.yaml
+```yaml
+resources:
+- app.yaml
+
+namespace: default
+```
+
+This forces all resources into the default namespace.
