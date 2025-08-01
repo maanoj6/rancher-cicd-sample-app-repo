@@ -17,6 +17,6 @@ spec:
     spec:
       containers:
         - name: sample-app
-          image: maanoj6/rancher-cicd-sample-app:v1
+          image: nginx:latest
           ports:
             - containerPort: 80
